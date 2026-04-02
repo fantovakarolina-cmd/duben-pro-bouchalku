@@ -3,90 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duben pro Bouchalku 🐾</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>Chume duben pro Bouchalku 🐾</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff6b6b;
-            --secondary: #4ecdc4;
-            --bg: #f0f4f8;
-            --card: #ffffff;
-            --text: #2d3436;
+            /* Scandi paleta */
+            --bg-color: #f8f9fa; /* Velmi jemná šedá/bílá */
+            --text-main: #333333; /* Téměř černá */
+            --text-muted: #6c757d; /* Tlumená šedá */
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            
+            --accent-main: #4a4a4a; /* Břidlicová šedá (místo minulé červené) */
+            --accent-past: #d2b48c; /* Jemná béžová pro minulé dny */
+            --accent-rust: #c6714c; /* Teplá akcentová pro dnešek a tlačítka */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            line-height: 1.6;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            max-width: 500px;
+            margin-bottom: 40px;
+            max-width: 600px;
         }
 
-        h1 { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; line-height: 1.1; }
-        p { font-size: 1rem; opacity: 0.8; line-height: 1.4; }
+        h1 { 
+            font-family: 'Lora', serif; /* Scandi elegence pro nadpisy */
+            font-size: 2.2rem; 
+            color: var(--text-main); 
+            margin-bottom: 12px; 
+            font-weight: 600;
+        }
+        
+        header p { 
+            font-size: 1rem; 
+            color: var(--text-muted); 
+            max-width: 450px;
+            margin: 0 auto;
+        }
 
+        /* Kalendář Grid - Scandi minimalismus */
         .grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(5, 1fr); /* 5 v řadě pro přehlednost */
+            gap: 10px;
             width: 100%;
             max-width: 450px;
             margin-bottom: 50px;
         }
 
+        @media (max-width: 400px) {
+            .grid { grid-template-columns: repeat(4, 1fr); } /* Na velmi malých mobilech 4 v řadě */
+        }
+
         .day-card {
             aspect-ratio: 1;
-            background: var(--card);
-            border-radius: 18px;
+            background: var(--card-bg);
+            border-radius: 8px; /* Menší zaoblení, čistší linie */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.3rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px solid transparent;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            color: var(--text-main);
         }
 
+        /* Scandi stavy */
         .day-card.locked {
-            opacity: 0.4;
-            background: #d1d8e0;
+            opacity: 0.3;
+            background: #e9ecef;
             cursor: not-allowed;
-            box-shadow: none;
+            border-color: #dee2e6;
         }
 
         .day-card.today {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: scale(1.1);
-            z-index: 2;
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            border: 2px solid var(--accent-rust);
+            color: var(--accent-rust);
+            background: #fff5f0;
+            transform: scale(1.05);
         }
 
         .day-card.past {
-            background: var(--secondary);
+            background: var(--accent-past);
             color: white;
+            border-color: var(--accent-past);
         }
 
-        /* Modal / Pop-up */
+        /* Modal / Pop-up - čistší a vzdušnější */
         #modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
             z-index: 100;
             padding: 20px;
             align-items: center;
@@ -96,98 +120,153 @@
         .modal-content {
             background: white;
             padding: 40px 30px;
-            border-radius: 30px;
+            border-radius: 16px;
             width: 100%;
             max-width: 380px;
             text-align: center;
             position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
 
         .price-tag {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            color: var(--primary);
-            margin: 20px 0;
+            color: var(--accent-rust);
+            margin: 15px 0 25px 0;
             display: block;
+            letter-spacing: -1px;
         }
 
+        .challenge-text {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* Scandi tlačítko */
         .btn {
             display: block;
-            background: var(--primary);
+            background: var(--accent-rust);
             color: white;
             text-decoration: none;
-            padding: 18px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.2);
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: background 0.2s ease;
         }
+
+        .btn:hover { background: #b06040; }
 
         .close-btn {
             margin-top: 25px;
-            font-size: 0.9rem;
-            color: #999;
-            text-decoration: underline;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
+        /* Info sekce - nová */
+        .info-section {
+            width: 100%;
+            max-width: 450px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .info-section h2 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .info-section p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .info-link {
+            color: var(--accent-rust);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .info-link:hover { text-decoration: underline; }
 
         footer {
             margin-top: auto;
             padding: 20px;
             font-size: 0.8rem;
-            opacity: 0.6;
+            color: var(--text-muted);
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🐾 Duben pro Bouchalku</h1>
-        <p>Malé odepření pro nás, velký skok pro útulek. Každý den jedna výzva!</p>
+        <h1>Chudý duben pro Bouchalku</h1>
+        <p>Malé odepření pro nás, nový začátek pro pejsky. Každý den jedna výzva!</p>
     </header>
 
     <div class="grid" id="calendarGrid"></div>
+
+    <div class="info-section">
+        <h2>Na co přispíváme?</h2>
+        <p>Pomáháme postavit nový, moderní útulek pro pejsky z Bouchalky. Staré prostory už dosloužily a zvířata potřebují důstojné zázemí, teplo a bezpečí, než najdou nový domov.</p>
+        <p>Každá koruna z tohoto kalendáře jde přímo na nákup stavebního materiálu a vybavení nových kotců.</p>
+        <a href="https://donio.cz/konec-bouchalky-a-novy-zacatek-stavime-utulek" target="_blank" class="info-link">Přečíst si celý příběh na Donio →</a>
+    </div>
 
     <div id="modal">
         <div class="modal-content" id="modalContent"></div>
     </div>
 
-    <footer>Stavíme nový útulek společně ❤️</footer>
+    <footer>Stavíme nový útulek společně ❤️ | duben 2026</footer>
 
     <script>
-        const DONIO_URL = "https://donio.cz/konec-bouchalky-a-novy-zacatek-stavime-utulek";
+        // Nový odkaz přímo na platební bránu
+        const DONIO_CONTRIBUTE_URL = "https://donio.cz/prispevek/38927";
         
         const challenges = {
-            1: { t: "Apríl? Tak pošli pár zlaťáků", p: "99 Kč" },
+            1: { t: "Ožel dnešní Flat White s ovesným mlékem. Kofein vyprchá, cihla v útulku zůstane!", p: "89 Kč" },
             2: { t: "Nekupuj si tyhle brambůrky k večernímu Netflixu. Tvoje břicho i pejsci ti poděkují.", p: "55 Kč" },
-            3: { t: "Ožel dnešní Flat White s ovesným mlékem. Kofein vyprchá, cihla v útulku zůstane!", p: "89 Kč" },
+            3: { t: "Dneska si nedávej ten jeden craftový speciál v hospodě. Voda je taky fajn!", p: "79 Kč" },
             4: { t: "Lístek do kina je fajn, ale dneska ho proměň v pořádnou porci granulí.", p: "180 Kč" },
             5: { t: "Vynechej dneska avokádový toast. Pejsci sice neví, co je brunch, ale hlad mají taky.", p: "165 Kč" },
-            6: { t: "Tuhle vonnou svíčku fakt nepotřebuješ. V útulku voní hlavně naděje!", p: "249 Kč" },
-            7: { t: "Ranní koláček z pekárny ožel. Pošli energii těm, co nemají ani misku.", p: "50 Kč" },
-            8: { t: "Placená aplikace, kterou použiješ jednou? Raději podpoř pejsky v jejich novém životu.", p: "120 Kč" },
+            6: { t: "Tuhle designovou vonnou svíčku fakt nepotřebuješ. V útulku voní hlavně naděje!", p: "249 Kč" },
+            7: { t: "Ranní sladký loupák z pekárny ožel. Pošli energii těm, co nemají ani misku.", p: "50 Kč" },
+            8: { t: "Placená aplikace, kterou použiješ jednou? Raději podpoř pejsky na Bouchalce.", p: "120 Kč" },
             9: { t: "Dneska si nekupuj ten časopis s horoskopem. Hvězdy říkají, že máš přispět!", p: "69 Kč" },
-            10: { t: "Vynechej dneska Foodoru a uvař si doma. Ten ušetřený kurýr zachraňuje životy.", p: "220 Kč" },
+            10: { t: "Vynechej dneska donášku jídla a uvař si doma. Ten ušetřený kurýr zachraňuje životy.", p: "220 Kč" },
             11: { t: "Třetí rtěnka v podobném odstínu? Pejskům je jedno, jakou máš barvu, hlavně když máš srdce.", p: "149 Kč" },
-            12: { t: "Místo prémiového mytí auta dneska jen oplach. Zbytek pošli do kotců.", p: "150 Kč" },
+            12: { t: "Místo prémiového mytí auta dneska jen oplach. Zbytek pošli do kotců.", p: "110 Kč" },
             13: { t: "Dnešní dezert po obědě vynechej. Ta sladká tečka bude tvůj dobrý skutek.", p: "85 Kč" },
-            14: { t: "Další tričko ve slevě, které skončí v šuplíku? V útulku se móda neřeší.", p: "199 Kč" },
+            14: { t: "Nekupuj si tenhle týden další tričko ve slevě. V útulku se móda neřeší.", p: "199 Kč" },
             15: { t: "Předplatné, které jsi zapomněla zrušit? Udělej to teď a pošli částku na Bouchalku.", p: "250 Kč" },
-            16: { t: "Maté tě nakopne na chvíli. Pomoc útulku ti zvedne náladu na celý den.", p: "65 Kč" },
+            16: { t: "Energy drink tě nakopne na chvíli. Pomoc útulku ti zvedne náladu na celý den.", p: "65 Kč" },
             17: { t: "Dneska si nedávej sýrový dip k nachos. Pošli ho radši do psí misky.", p: "55 Kč" },
             18: { t: "Místo taxi dneska jeď MHD nebo jdi pěšky. Procházka pro tebe, peníze pro psy.", p: "130 Kč" },
-            19: { t: "Tenhle dortík je jen cukr. Radost v útulku je mnohem sladší!", p: "115 Kč" },
+            19: { t: "Tenhle fancy bubble tea je jen cukr. Radost v útulku je mnohem sladší!", p: "115 Kč" },
             20: { t: "Krabice kapslí do kávovaru? Pár dní pij turka a pošli rozdíl pejskům.", p: "140 Kč" },
             21: { t: "Nový kryt na mobil? Ten starý je ještě v pohodě, útulek ale potřebuje novou střechu.", p: "210 Kč" },
             22: { t: "Dneska žádné placené parkování v centru, zaparkuj dál a projdi se pro dobrou věc.", p: "60 Kč" },
             23: { t: "Vynechej dneska doplňky stravy, co stejně nejíš. Pošli radši vitamíny do útulku.", p: "175 Kč" },
             24: { t: "Lístek do tomboly nebo stírací los? Dneska vyhrávají pejsci na jistotu!", p: "50 Kč" },
-            25: { t: "Místo drahého koktejlu v baru si dej doma čaj a zachraň jeden psí den a svou ranní kocovinu.", p: "160 Kč" },
-            26: { t: "Nekupuj si ponožky s vtipným potiskem. Raději podpoř čtyři tlapky.", p: "125 Kč" },
-            27: { t: "Dneska bez fastfoodu. I chleba s pštikou chutná po dobrém skutku!", p: "145 Kč" },
-            28: { t: "Vynechej nákup nepotřebné dekorace do bytu. V nový útulek bude ta nejhezčí ozdoba.", p: "190 Kč" },
-            29: { t: "Dneska si nekupuj zmrzliku za odměnu. Psí radost je ta nejlepší odměna.", p: "70 Kč" },
+            25: { t: "Místo drahého koktejlu v baru si dej doma čaj a zachraň jeden psí den.", p: "160 Kč" },
+            26: { t: "Nekupuj si tyhle fancy ponožky s vtipným potiskem. Raději podpoř čtyři tlapky.", p: "125 Kč" },
+            27: { t: "Dneska bez fastfoodu. Ta domácí bageta chutná po dobrém skutku!", p: "145 Kč" },
+            28: { t: "Vynechej nákup dekorace do bytu. V novém útulku to bude ta nejhezčí ozdoba.", p: "190 Kč" },
+            29: { t: "Dneska si nekupuj drahou zmrzlinu s posypkou. Psí radost je ta nejlepší odměna.", p: "70 Kč" },
             30: { t: "Poslední den! Dej si dneska postní den od blbostí a završi to pořádným darem.", p: "250 Kč" }
         };
 
@@ -216,7 +295,7 @@
 
             card.onclick = () => {
                 if (isLocked) {
-                    const msg = currentMonth < 3 ? "Vydrž, duben ještě nezačal!" : "Tenhle den je ještě ve hvězdách.";
+                    const msg = currentMonth < 3 ? "Vydrž, chudý duben ještě nezačal!" : "Tenhle den si odepřeš až v budoucnu.";
                     alert(msg);
                     return;
                 }
@@ -229,11 +308,11 @@
         function showModal(day) {
             const data = challenges[day];
             modalContent.innerHTML = `
-                <div style="font-size: 0.9rem; font-weight: 800; color: var(--secondary); text-transform: uppercase;">Výzva na ${day}. dubna</div>
+                <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Dnešní odpustek (${day}. dubna)</div>
                 <div class="price-tag">${data.p}</div>
-                <p style="font-size: 1.1rem; line-height: 1.5; margin-bottom: 20px;">${data.t}</p>
-                <a href="${DONIO_URL}" target="_blank" class="btn" onclick="closeModal()">CHCI PŘISPĚT</a>
-                <div class="close-btn" onclick="closeModal()">možná zítra...</div>
+                <p class="challenge-text">${data.t}</p>
+                <a href="${DONIO_CONTRIBUTE_URL}" target="_blank" class="btn" onclick="closeModal()">PŘISPĚT NA DONIO</a>
+                <div class="close-btn" onclick="closeModal()">zavřít</div>
             `;
             modal.style.display = 'flex';
         }
