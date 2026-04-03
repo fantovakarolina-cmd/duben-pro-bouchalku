@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐾 Chume duben pro nový útulek 🐾</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Lora:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f4f7f6; /* Trochu čistší šedá */
-            --text-main: #2d3436; /* Jemnější černá */
+            --bg-color: #fcfaf7; /* Teplá scandi bílá */
+            --text-main: #2d3436;
             --text-muted: #636e72;
-            --card-bg: #ffffff;
-            --border-color: #e6e9ef;
             --accent-rust: #c6714c;
-            --accent-past: #d2b48c;
-            --scandi-beige: #f1e9db; /* Nová Scandi barva pro nadpis */
+            --accent-tan: #d2b48c;
+            --accent-olive: #8c927d;
+            --accent-slate: #5e6472;
+            --border-color: #eeeae3;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -23,7 +23,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding: 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -31,143 +31,124 @@
             line-height: 1.6;
         }
 
-        /* Nový, ultra-stylový design nadpisu */
+        /* Hravý a stylový nadpis */
         header {
             text-align: center;
-            margin-bottom: 30px;
-            max-width: 500px;
+            margin-bottom: 50px;
+            max-width: 800px;
             width: 100%;
-            position: relative;
         }
 
-        .header-title-wrapper {
-            background-color: var(--scandi-beige);
-            padding: 25px 20px;
-            border-radius: 20px 5px 20px 5px; /* Asymetrické rohy */
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(210, 180, 140, 0.2);
+        .chume-logo {
+            font-size: clamp(2rem, 8vw, 3.5rem); /* Dynamická velikost pro mobil i PC */
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
             margin-bottom: 15px;
-            border: 1px solid rgba(0,0,0,0.03);
+            display: block;
         }
 
-        h1 { 
-            font-family: 'Lora', serif;
-            font-size: 1.7rem; 
-            color: var(--text-main); 
-            font-weight: 500;
-            line-height: 1.2;
-            letter-spacing: -0.5px;
-        }
-        
+        /* Každé slovo jinou barvou pro "vibe" */
+        .chume-logo span:nth-child(1) { color: var(--accent-slate); }
+        .chume-logo span:nth-child(2) { color: var(--accent-rust); }
+        .chume-logo span:nth-child(3) { color: var(--accent-olive); font-family: 'Lora', serif; font-style: italic; font-weight: 500; letter-spacing: 0; }
+        .chume-logo span:nth-child(4) { color: var(--accent-tan); }
+
         .intro-text {
-            font-size: 0.9rem;
+            font-family: 'Lora', serif;
+            font-size: clamp(1rem, 3vw, 1.2rem);
             color: var(--text-muted);
-            line-height: 1.4;
-            margin-top: 10px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
+        /* Kalendář */
         .grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
+            gap: 12px;
             width: 100%;
-            max-width: 450px;
-            margin: 30px 0;
+            max-width: 500px;
+            margin-bottom: 50px;
         }
 
-        @media (max-width: 400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 450px) { .grid { grid-template-columns: repeat(4, 1fr); } }
 
         .day-card {
             aspect-ratio: 1;
-            background: var(--card-bg);
-            border-radius: 10px;
+            background: white;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
             border: 1px solid var(--border-color);
-            transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
 
-        .day-card.locked { opacity: 0.3; background: #e9ecef; cursor: not-allowed; border-color: #e6e9ef; }
-        .day-card.today { border: 2px solid var(--accent-rust); color: var(--accent-rust); background: #fff5f0; transform: scale(1.05); z-index: 2; box-shadow: 0 5px 15px rgba(198, 113, 76, 0.2); }
-        .day-card.past { background: var(--accent-past); color: white; border-color: var(--accent-past); }
+        .day-card.locked { opacity: 0.2; cursor: not-allowed; }
+        .day-card.today { border: 2px solid var(--accent-rust); color: var(--accent-rust); transform: scale(1.08); box-shadow: 0 10px 20px rgba(198, 113, 76, 0.15); z-index: 5; }
+        .day-card.past { background: var(--accent-tan); color: white; border-color: var(--accent-tan); }
+        .day-card:hover:not(.locked) { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
-        /* Box o sbírce */
+        /* Spodní boxík */
         .info-box {
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             background: white;
-            padding: 30px 25px;
-            border-radius: 20px;
+            padding: 35px;
+            border-radius: 24px;
             border: 1px solid var(--border-color);
-            margin-top: 10px;
-            margin-bottom: 50px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center;
         }
 
-        .info-box h2 {
-            font-family: 'Lora', serif;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: var(--text-main);
-            font-weight: 500;
-        }
+        .info-box h2 { font-family: 'Lora', serif; font-size: 1.5rem; margin-bottom: 15px; }
+        .info-box p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; }
+        .info-link { color: var(--accent-rust); font-weight: 700; text-decoration: none; border-bottom: 2px solid #f2dcd3; transition: all 0.2s; }
+        .info-link:hover { background: #f2dcd3; }
 
-        .info-box p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        .info-link {
-            color: var(--accent-rust);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        /* Modaly bez URL */
+        /* Modaly */
         .overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
+            background: rgba(45, 52, 70, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 100;
             padding: 20px;
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
         }
 
         .modal-content {
             background: white;
-            padding: 45px 30px;
-            border-radius: 24px;
+            padding: 50px 30px;
+            border-radius: 30px;
             width: 100%;
-            max-width: 380px;
+            max-width: 400px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
 
-        .price-tag { font-size: 3.2rem; font-weight: 800; color: var(--accent-rust); margin-bottom: 25px; display: block; letter-spacing: -1.5px; }
-        .btn { display: block; background: var(--accent-rust); color: white; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 700; margin-bottom: 15px; font-size: 1.05rem; }
-        .btn-no { display: block; background: transparent; color: #d9534f; border: 1px solid #d9534f; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
-        .scold-text { font-size: 1.7rem; font-weight: 600; color: var(--text-main); font-family: 'Lora', serif; line-height: 1.3; }
+        .price-tag { font-size: 3.5rem; font-weight: 800; color: var(--accent-rust); margin-bottom: 15px; letter-spacing: -2px; }
+        .btn { display: block; background: var(--accent-rust); color: white; text-decoration: none; padding: 20px; border-radius: 15px; font-weight: 700; margin-bottom: 15px; font-size: 1.1rem; transition: transform 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-no { display: block; background: #fdf2f2; color: #d9534f; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; border: none; }
         
-        footer { margin-top: auto; padding: 25px; font-size: 0.7rem; color: #b2bec3; text-align: center; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+        .scold-text { font-size: 1.8rem; font-weight: 600; font-family: 'Lora', serif; }
+
+        footer { margin-top: auto; padding: 40px; font-size: 0.75rem; color: #b2bec3; letter-spacing: 2px; font-weight: 700; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-title-wrapper">
-            <h1>🐾 Chume duben<br>pro nový útulek 🐾</h1>
+        <div class="chume-logo">
+            <span>Chume</span> <span>duben</span><br>
+            <span>pro nový</span> <span>útulek</span>
         </div>
         <p class="intro-text">Stará Bouchalka byla pro zvířata peklo. Pejsci už si zaslouží jen to dobré.</p>
     </header>
@@ -176,8 +157,8 @@
 
     <div class="info-box">
         <h2>Na co přispíváme?</h2>
-        <p>Stavíme moderní útulek, který nahradí nevyhovující prostory staré Bouchalky. <strong>Útulek hrůzy Bouchalka musí skončit.</strong> Cílem je vytvořit bezpečné místo se zázemím, které odpovídá potřebám zvířat v 21. století.</p>
-        <a href="https://donio.cz/konec-bouchalky-a-novy-zacatek-stavime-utulek" target="_blank" class="info-link">Přečíst celý příběh na Donio →</a>
+        <p>Stavíme moderní útulek, který nahradí nevyhovující prostory staré Bouchalky. <strong>Útulek hrůzy Bouchalka musí skončit.</strong></p>
+        <a href="https://donio.cz/konec-bouchalky-a-novy-zacatek-stavime-utulek" target="_blank" class="info-link">Celý příběh na Donio →</a>
     </div>
 
     <div id="modal" class="overlay">
@@ -191,11 +172,10 @@
         </div>
     </div>
 
-    <footer>Stavíme nový útulek společně ❤️ | 2026</footer>
+    <footer>BOUCHALKA 2026</footer>
 
     <script>
         const DONIO_CONTRIBUTE_URL = "https://donio.cz/prispevek/38927";
-        
         const challenges = {
             1: { t: "Apríl! Dneska ti nebudu nic nutit... ale pejskové mají hlad i vtipný dny. Tak nebuď aprílovej vtip a pošli pade!", p: "50 Kč" },
             2: { t: "Včera to byl vtip, dneska už ne. Nekupuj si tyhle brambůrky k Netflixu. Tvoje břicho i pejsci poděkují.", p: "55 Kč" },
@@ -253,19 +233,16 @@
             if (isPast) card.classList.add('past');
             if (isLocked) card.classList.add('locked');
 
-            card.onclick = () => {
-                if (isLocked) return;
-                showModal(i);
-            };
+            card.onclick = () => { if (!isLocked) showModal(i); };
             grid.appendChild(card);
         }
 
         function showModal(day) {
             const data = challenges[day];
             modalContent.innerHTML = `
-                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Výzva (${day}. dubna)</div>
+                <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 10px;">VÝZVA DNE</div>
                 <div class="price-tag">${data.p}</div>
-                <p style="margin-bottom: 30px; font-size: 1.05rem; color: var(--text-main);">${data.t}</p>
+                <p style="margin-bottom: 35px; font-size: 1.1rem;">${data.t}</p>
                 <a href="${DONIO_CONTRIBUTE_URL}" target="_blank" class="btn" onclick="closeModal()">PŘISPĚT NA DONIO</a>
                 <div class="btn-no" onclick="handleNo()">DNES NE</div>
             `;
@@ -275,8 +252,7 @@
         function handleNo() {
             closeModal();
             const quotes = ["Starobu na Tebe!", "Haha, mýval se uklik?"];
-            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-            scoldText.innerText = randomQuote;
+            scoldText.innerText = quotes[Math.floor(Math.random() * quotes.length)];
             scoldModal.style.display = 'flex';
         }
 
