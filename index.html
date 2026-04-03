@@ -33,31 +33,27 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            max-width: 600px;
+            max-width: 500px;
+            padding: 25px 15px;
+            border: 1px solid var(--border-color); /* Jemné ohraničení vršku */
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         h1 { 
             font-family: 'Lora', serif;
-            font-size: 2rem; 
+            font-size: 1.8rem; 
             color: var(--text-main); 
-            margin-bottom: 15px; 
+            margin-bottom: 10px; 
             font-weight: 600;
-            line-height: 1.2;
         }
         
-        .intro-box {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-rust);
-            margin-bottom: 30px;
-            font-size: 0.95rem;
-            text-align: left;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        .intro-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
-
-        .intro-box p { margin-bottom: 10px; color: var(--text-main); }
-        .intro-box p:last-child { margin-bottom: 0; font-weight: 600; color: var(--accent-rust); }
 
         .grid {
             display: grid;
@@ -65,7 +61,7 @@
             gap: 10px;
             width: 100%;
             max-width: 450px;
-            margin-bottom: 40px;
+            margin: 30px 0;
         }
 
         @media (max-width: 400px) { .grid { grid-template-columns: repeat(4, 1fr); } }
@@ -88,7 +84,38 @@
         .day-card.today { border: 2px solid var(--accent-rust); color: var(--accent-rust); background: #fff5f0; transform: scale(1.05); z-index: 2; }
         .day-card.past { background: var(--accent-past); color: white; border-color: var(--accent-past); }
 
-        /* Vlastní Modaly */
+        /* Box o sbírce */
+        .info-box {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-top: 10px;
+            margin-bottom: 40px;
+        }
+
+        .info-box h2 {
+            font-family: 'Lora', serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .info-link {
+            color: var(--accent-rust);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Modaly bez URL */
         .overlay {
             display: none;
             position: fixed;
@@ -109,31 +136,30 @@
             max-width: 380px;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            position: relative;
         }
 
         .price-tag { font-size: 2.8rem; font-weight: 800; color: var(--accent-rust); margin-bottom: 20px; display: block; }
-        
         .btn { display: block; background: var(--accent-rust); color: white; text-decoration: none; padding: 16px; border-radius: 8px; font-weight: 700; margin-bottom: 12px; }
-        .btn-no { display: block; background: transparent; color: #d9534f; border: 1px solid #d9534f; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
-
+        .btn-no { display: block; background: transparent; color: #d9534f; border: 1px solid #d9534f; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; }
         .scold-text { font-size: 1.5rem; font-weight: 700; color: var(--text-main); font-family: 'Lora', serif; }
         
-        footer { margin-top: auto; padding: 20px; font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+        footer { margin-top: auto; padding: 20px; font-size: 0.7rem; color: var(--text-muted); text-align: center; letter-spacing: 1px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>🐾 Chume duben pro nový útulek 🐾</h1>
-        
-        <div class="intro-box">
-            <p>Stará Bouchalka byla pro zvířata peklo. Pejsci si ale zaslouží jen to dobré.</p>
-            <p>Sbíráme zlaťáčky na nový a bezpečný domov, než najdou ty své rodiny. Každé tvoje odepření pomáhá stavět!</p>
-        </div>
+        <p class="intro-text">Stará Bouchalka byla pro zvířata peklo. Pejsci už si zaslouží jen to dobré.</p>
     </header>
 
     <div class="grid" id="calendarGrid"></div>
+
+    <div class="info-box">
+        <h2>Na co přispíváme?</h2>
+        <p>Stavíme moderní útulek, který nahradí nevyhovující prostory staré Bouchalky. Cílem je vytvořit bezpečné místo se zázemím, které odpovídá potřebám zvířat v 21. století.</p>
+        <a href="https://donio.cz/konec-bouchalky-a-novy-zacatek-stavime-utulek" target="_blank" class="info-link">Přečíst celý příběh na Donio →</a>
+    </div>
 
     <div id="modal" class="overlay">
         <div class="modal-content" id="modalContent"></div>
@@ -146,7 +172,7 @@
         </div>
     </div>
 
-    <footer>Stavíme nový útulek společně ❤️ | duben 2026</footer>
+    <footer>Stavíme nový útulek společně ❤️ | 2026</footer>
 
     <script>
         const DONIO_CONTRIBUTE_URL = "https://donio.cz/prispevek/38927";
@@ -218,9 +244,9 @@
         function showModal(day) {
             const data = challenges[day];
             modalContent.innerHTML = `
-                <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Chume výzva (${day}. 4.)</div>
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Výzva (${day}. dubna)</div>
                 <div class="price-tag">${data.p}</div>
-                <p style="margin-bottom: 25px;">${data.t}</p>
+                <p style="margin-bottom: 25px; font-size: 1rem;">${data.t}</p>
                 <a href="${DONIO_CONTRIBUTE_URL}" target="_blank" class="btn" onclick="closeModal()">PŘISPĚT NA DONIO</a>
                 <div class="btn-no" onclick="handleNo()">DNES NE</div>
             `;
